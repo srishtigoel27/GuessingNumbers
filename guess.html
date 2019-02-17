@@ -1,10 +1,7 @@
 <!DOCTYPE html>
 <html>
   <head>
-    <meta charset="utf-8">
-
     <title>Number guessing game</title>
-
     <style>
       html {
         font-family: sans-serif;
@@ -19,27 +16,54 @@
         color: white;
         padding: 3px;
       }
+      #guesses,#lastResult,#lowOrHi
+      {
+        font-size:22px;
+      }
+      #guessSubmit,#guessField
+      {
+        font-size:16px;
+      }
     </style>
+    <script>
+      function guessNum()
+      {
+        g=60;
+          var x=document.getElementById("guessField").value;
+          document.getElementById("guesses").innerHTML +=" "+x;
+          document.getElementById("guessField").value="";
+          if(g-x>20)
+          {
+            document.getElementById("lowOrHi").innerHTML="too low";
+            document.getElementById("lastResult").innerHTML="Wrong";
+            document.getElementById("lastResult").style.backgroundColor = "red";
+          }
+          else if(x-g>20) {
+            document.getElementById("lowOrHi").innerHTML="too high";
+            document.getElementById("lastResult").innerHTML="Wrong";
+            document.getElementById("lastResult").style.backgroundColor = "red";
+          }
+          else if(g==x)
+          {
+            document.getElementById("lastResult").innerHTML="Congratulation! You got it right";
+            document.getElementById("lastResult").style.backgroundColor = "green";
+            document.getElementById("lowOrHi").innerHTML="";
+          }
+      }
+    </script>
   </head>
-
   <body>
     <h1>Number guessing game</h1>
-
     <p>We have selected a random number between 1 and 100. See if you can guess it in 10 turns or fewer. We'll tell you if your guess was too high or too low.</p>
 
     <div class="form">
       <label for="guessField">Enter a guess: </label><input type="text" id="guessField" class="guessField">
-      <input type="submit" value="Submit guess" class="guessSubmit">
+      <input type="submit" value="Submit guess" id="guessSubmit" onclick="guessNum()">
     </div>
-
     <div class="resultParas">
-      <p class="guesses"></p>
-      <p class="lastResult"></p>
-      <p class="lowOrHi"></p>
+      <p id="guesses">Previous Guess:</p>
+      <p id="lastResult"></p>
+      <p id="lowOrHi"></p>
     </div>
-
-    <script>
-      // Your JavaScript goes here
-    </script>
   </body>
 </html>
