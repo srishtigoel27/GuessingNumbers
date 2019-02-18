@@ -3,42 +3,62 @@
   <head>
     <title>Number guessing game</title>
     <style>
-      html {
+      html
+      {
         font-family: sans-serif;
       }
-      body {
+      body
+      {
         width: 50%;
         max-width: 800px;
         min-width: 480px;
         margin: 0 auto;
       }
-      .lastResult {
+      .lastResult
+      {
         color: white;
         padding: 3px;
       }
-      #guesses,#lastResult,#lowOrHi
+      #guesses,#lastResult,#lowOrHi,#guessField
       {
-        font-size:22px;
+        font-size:20px;
       }
-      #guessSubmit,#guessField
+      #guessSubmit,#reset
       {
+        border:none;
+        color:black;
+        border-radius:10px;
+        padding: 15px 20px;
+        text-align: center;
+        cursor: pointer;
         font-size:16px;
+      }
+      input[type=submit]:active
+      {
+        transform: translateY(4px);
       }
     </style>
     <script>
+    count=0;
+    var min=1;
+    var max=100;
+    g =Math.floor(Math.random() * (+max - +min)) + +min;
       function guessNum()
-      {
-        g=60;
-          var x=document.getElementById("guessField").value;
+        {
+          console.log(g);
+          x=document.getElementById("guessField").value;
+          document.getElementById("guessField").innerHTML=x;
+          document.getElementById("guesses").style.display="block";
           document.getElementById("guesses").innerHTML +=" "+x;
           document.getElementById("guessField").value="";
-          if(g-x>20)
+          if(x<g)
           {
             document.getElementById("lowOrHi").innerHTML="too low";
             document.getElementById("lastResult").innerHTML="Wrong";
             document.getElementById("lastResult").style.backgroundColor = "red";
           }
-          else if(x-g>20) {
+          else if(x>g)
+          {
             document.getElementById("lowOrHi").innerHTML="too high";
             document.getElementById("lastResult").innerHTML="Wrong";
             document.getElementById("lastResult").style.backgroundColor = "red";
@@ -49,21 +69,39 @@
             document.getElementById("lastResult").style.backgroundColor = "green";
             document.getElementById("lowOrHi").innerHTML="";
           }
-      }
+          count=count+1;
+          if(count==5)
+          {
+            document.getElementById("lastResult").innerHTML="You Lost! " +g +" is the correct answer";
+            document.getElementById("reset").style.display="block";
+            document.getElementById("guessField").disabled = true;
+          }
+        }
+        function restart()
+        {
+          document.getElementById("guessField").disabled = false;
+          document.getElementById("guessField").value="";
+          document.getElementById("lowOrHi").innerHTML="";
+          document.getElementById("lastResult").innerHTML="";
+          document.getElementById("guesses").innerHTML ="";
+          document.getElementById("guesses").style.display="block";
+          document.getElementById("reset").style.display="none";
+          g =Math.floor(Math.random() * (+max - +min)) + +min;
+        }
     </script>
   </head>
   <body>
     <h1>Number guessing game</h1>
     <p>We have selected a random number between 1 and 100. See if you can guess it in 10 turns or fewer. We'll tell you if your guess was too high or too low.</p>
-
     <div class="form">
-      <label for="guessField">Enter a guess: </label><input type="text" id="guessField" class="guessField">
+      <label for="guessField">Enter a guess: </label><input type="text" id="guessField" class="guessField" autofocus>
       <input type="submit" value="Submit guess" id="guessSubmit" onclick="guessNum()">
     </div>
     <div class="resultParas">
-      <p id="guesses">Previous Guess:</p>
+      <p id="guesses"style="display:none">Previous Guess:</p>
       <p id="lastResult"></p>
       <p id="lowOrHi"></p>
     </div>
+    <input type="button" id="reset" value="Restart"onclick="restart()"style="display:none;">
   </body>
 </html>
