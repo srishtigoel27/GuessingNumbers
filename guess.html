@@ -37,6 +37,10 @@
       {
         transform: translateY(4px);
       }
+      input[type=button]:active
+      {
+        transform: translateY(4px);
+      }
     </style>
     <script>
     count=0;
@@ -68,9 +72,11 @@
             document.getElementById("lastResult").innerHTML="Congratulation! You got it right";
             document.getElementById("lastResult").style.backgroundColor = "green";
             document.getElementById("lowOrHi").innerHTML="";
+            document.getElementById("guessField").disabled = true;
+            document.getElementById("reset").style.display="block";
           }
           count=count+1;
-          if(count==5)
+          if(count==10)
           {
             document.getElementById("lastResult").innerHTML="You Lost! " +g +" is the correct answer";
             document.getElementById("reset").style.display="block";
