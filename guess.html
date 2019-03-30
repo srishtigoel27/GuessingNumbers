@@ -43,10 +43,8 @@
       }
     </style>
     <script>
-    count=0;
-    var min=1;
-    var max=100;
-    g =Math.floor(Math.random() * (+max - +min)) + +min;
+    var count=0;
+    g =Math.floor((Math.random() * 100)+1);
       function guessNum()
         {
           console.log(g);
@@ -76,7 +74,7 @@
             document.getElementById("reset").style.display="block";
           }
           count=count+1;
-          if(count==10)
+          if(count>=10)
           {
             document.getElementById("lastResult").innerHTML="You Lost! " +g +" is the correct answer";
             document.getElementById("reset").style.display="block";
@@ -92,7 +90,17 @@
           document.getElementById("guesses").innerHTML ="";
           document.getElementById("guesses").style.display="block";
           document.getElementById("reset").style.display="none";
-          g =Math.floor(Math.random() * (+max - +min)) + +min;
+          g =Math.floor((Math.random() * 100)+1);
+          count=0;
+        }
+        function restrictAlpha(e)
+        {
+          var key=e.charCode;
+          if((key>=48&&key<=57)||key==8)
+            return true;
+          else {
+            return false;
+          }
         }
     </script>
   </head>
@@ -100,7 +108,7 @@
     <h1>Number guessing game</h1>
     <p>We have selected a random number between 1 and 100. See if you can guess it in 10 turns or fewer. We'll tell you if your guess was too high or too low.</p>
     <div class="form">
-      <label for="guessField">Enter a guess: </label><input type="text" id="guessField" class="guessField" autofocus>
+      <label for="guessField">Enter a guess: </label><input type="text" id="guessField" class="guessField" autofocus onkeypress="return restrictAlpha(event)">
       <input type="submit" value="Submit guess" id="guessSubmit" onclick="guessNum()">
     </div>
     <div class="resultParas">
